@@ -9,6 +9,26 @@ type LoginPostRes interface {
 	loginPostRes()
 }
 
+type ProductsPostRes interface {
+	productsPostRes()
+}
+
+type PvzPostRes interface {
+	pvzPostRes()
+}
+
+type PvzPvzIdCloseLastReceptionPostRes interface {
+	pvzPvzIdCloseLastReceptionPostRes()
+}
+
+type PvzPvzIdDeleteLastProductPostRes interface {
+	pvzPvzIdDeleteLastProductPostRes()
+}
+
+type ReceptionsPostRes interface {
+	receptionsPostRes()
+}
+
 type RegisterPostRes interface {
 	registerPostRes()
 }

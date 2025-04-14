@@ -31,6 +31,65 @@ func (UnimplementedHandler) LoginPost(ctx context.Context, req *LoginPostReq) (r
 	return r, ht.ErrNotImplemented
 }
 
+// ProductsPost implements POST /products operation.
+//
+// Добавление товара в текущую приемку (только для
+// сотрудников ПВЗ).
+//
+// POST /products
+func (UnimplementedHandler) ProductsPost(ctx context.Context, req *ProductsPostReq) (r ProductsPostRes, _ error) {
+	return r, ht.ErrNotImplemented
+}
+
+// PvzGet implements GET /pvz operation.
+//
+// Получение списка ПВЗ с фильтрацией по дате приемки и
+// пагинацией.
+//
+// GET /pvz
+func (UnimplementedHandler) PvzGet(ctx context.Context, params PvzGetParams) (r []PvzGetOKItem, _ error) {
+	return r, ht.ErrNotImplemented
+}
+
+// PvzPost implements POST /pvz operation.
+//
+// Создание ПВЗ (только для модераторов).
+//
+// POST /pvz
+func (UnimplementedHandler) PvzPost(ctx context.Context, req *PVZ) (r PvzPostRes, _ error) {
+	return r, ht.ErrNotImplemented
+}
+
+// PvzPvzIdCloseLastReceptionPost implements POST /pvz/{pvzId}/close_last_reception operation.
+//
+// Закрытие последней открытой приемки товаров в рамках
+// ПВЗ.
+//
+// POST /pvz/{pvzId}/close_last_reception
+func (UnimplementedHandler) PvzPvzIdCloseLastReceptionPost(ctx context.Context, params PvzPvzIdCloseLastReceptionPostParams) (r PvzPvzIdCloseLastReceptionPostRes, _ error) {
+	return r, ht.ErrNotImplemented
+}
+
+// PvzPvzIdDeleteLastProductPost implements POST /pvz/{pvzId}/delete_last_product operation.
+//
+// Удаление последнего добавленного товара из текущей
+// приемки (LIFO, только для сотрудников ПВЗ).
+//
+// POST /pvz/{pvzId}/delete_last_product
+func (UnimplementedHandler) PvzPvzIdDeleteLastProductPost(ctx context.Context, params PvzPvzIdDeleteLastProductPostParams) (r PvzPvzIdDeleteLastProductPostRes, _ error) {
+	return r, ht.ErrNotImplemented
+}
+
+// ReceptionsPost implements POST /receptions operation.
+//
+// Создание новой приемки товаров (только для
+// сотрудников ПВЗ).
+//
+// POST /receptions
+func (UnimplementedHandler) ReceptionsPost(ctx context.Context, req *ReceptionsPostReq) (r ReceptionsPostRes, _ error) {
+	return r, ht.ErrNotImplemented
+}
+
 // RegisterPost implements POST /register operation.
 //
 // Регистрация пользователя.

@@ -8,7 +8,7 @@ import (
 )
 
 func (u *usecase) Login(ctx context.Context, user domain.User) (string, error) {
-	storedUser, err := u.repo.GetByEmail(ctx, user.Email)
+	storedUser, err := u.repo.GetUserByEmail(ctx, user.Email)
 	if err != nil {
 		return "", domain.ErrInvalidCredentials
 	}
@@ -18,7 +18,10 @@ func (u *usecase) Login(ctx context.Context, user domain.User) (string, error) {
 		return "", domain.ErrInvalidCredentials
 	}
 
-	token, err := u.jwt.GenerateToken(storedUser.ID)
+	token, err := u.jwt.GenerateToken(domain.Claims{
+		UserID: storedUser.ID,
+		Role:   storedUser.Role,
+	})
 	if err != nil {
 		return "", err
 	}

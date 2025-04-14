@@ -40,6 +40,7 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		s.notFound(w, r)
 		return
 	}
+	args := [1]string{}
 
 	// Static code generated router with unwrapped path search.
 	switch {
@@ -100,24 +101,196 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 					return
 				}
 
-			case 'r': // Prefix: "register"
+			case 'p': // Prefix: "p"
 
-				if l := len("register"); len(elem) >= l && elem[0:l] == "register" {
+				if l := len("p"); len(elem) >= l && elem[0:l] == "p" {
 					elem = elem[l:]
 				} else {
 					break
 				}
 
 				if len(elem) == 0 {
-					// Leaf node.
-					switch r.Method {
-					case "POST":
-						s.handleRegisterPostRequest([0]string{}, elemIsEscaped, w, r)
-					default:
-						s.notAllowed(w, r, "POST")
+					break
+				}
+				switch elem[0] {
+				case 'r': // Prefix: "roducts"
+
+					if l := len("roducts"); len(elem) >= l && elem[0:l] == "roducts" {
+						elem = elem[l:]
+					} else {
+						break
 					}
 
-					return
+					if len(elem) == 0 {
+						// Leaf node.
+						switch r.Method {
+						case "POST":
+							s.handleProductsPostRequest([0]string{}, elemIsEscaped, w, r)
+						default:
+							s.notAllowed(w, r, "POST")
+						}
+
+						return
+					}
+
+				case 'v': // Prefix: "vz"
+
+					if l := len("vz"); len(elem) >= l && elem[0:l] == "vz" {
+						elem = elem[l:]
+					} else {
+						break
+					}
+
+					if len(elem) == 0 {
+						switch r.Method {
+						case "GET":
+							s.handlePvzGetRequest([0]string{}, elemIsEscaped, w, r)
+						case "POST":
+							s.handlePvzPostRequest([0]string{}, elemIsEscaped, w, r)
+						default:
+							s.notAllowed(w, r, "GET,POST")
+						}
+
+						return
+					}
+					switch elem[0] {
+					case '/': // Prefix: "/"
+
+						if l := len("/"); len(elem) >= l && elem[0:l] == "/" {
+							elem = elem[l:]
+						} else {
+							break
+						}
+
+						// Param: "pvzId"
+						// Match until "/"
+						idx := strings.IndexByte(elem, '/')
+						if idx < 0 {
+							idx = len(elem)
+						}
+						args[0] = elem[:idx]
+						elem = elem[idx:]
+
+						if len(elem) == 0 {
+							break
+						}
+						switch elem[0] {
+						case '/': // Prefix: "/"
+
+							if l := len("/"); len(elem) >= l && elem[0:l] == "/" {
+								elem = elem[l:]
+							} else {
+								break
+							}
+
+							if len(elem) == 0 {
+								break
+							}
+							switch elem[0] {
+							case 'c': // Prefix: "close_last_reception"
+
+								if l := len("close_last_reception"); len(elem) >= l && elem[0:l] == "close_last_reception" {
+									elem = elem[l:]
+								} else {
+									break
+								}
+
+								if len(elem) == 0 {
+									// Leaf node.
+									switch r.Method {
+									case "POST":
+										s.handlePvzPvzIdCloseLastReceptionPostRequest([1]string{
+											args[0],
+										}, elemIsEscaped, w, r)
+									default:
+										s.notAllowed(w, r, "POST")
+									}
+
+									return
+								}
+
+							case 'd': // Prefix: "delete_last_product"
+
+								if l := len("delete_last_product"); len(elem) >= l && elem[0:l] == "delete_last_product" {
+									elem = elem[l:]
+								} else {
+									break
+								}
+
+								if len(elem) == 0 {
+									// Leaf node.
+									switch r.Method {
+									case "POST":
+										s.handlePvzPvzIdDeleteLastProductPostRequest([1]string{
+											args[0],
+										}, elemIsEscaped, w, r)
+									default:
+										s.notAllowed(w, r, "POST")
+									}
+
+									return
+								}
+
+							}
+
+						}
+
+					}
+
+				}
+
+			case 'r': // Prefix: "re"
+
+				if l := len("re"); len(elem) >= l && elem[0:l] == "re" {
+					elem = elem[l:]
+				} else {
+					break
+				}
+
+				if len(elem) == 0 {
+					break
+				}
+				switch elem[0] {
+				case 'c': // Prefix: "ceptions"
+
+					if l := len("ceptions"); len(elem) >= l && elem[0:l] == "ceptions" {
+						elem = elem[l:]
+					} else {
+						break
+					}
+
+					if len(elem) == 0 {
+						// Leaf node.
+						switch r.Method {
+						case "POST":
+							s.handleReceptionsPostRequest([0]string{}, elemIsEscaped, w, r)
+						default:
+							s.notAllowed(w, r, "POST")
+						}
+
+						return
+					}
+
+				case 'g': // Prefix: "gister"
+
+					if l := len("gister"); len(elem) >= l && elem[0:l] == "gister" {
+						elem = elem[l:]
+					} else {
+						break
+					}
+
+					if len(elem) == 0 {
+						// Leaf node.
+						switch r.Method {
+						case "POST":
+							s.handleRegisterPostRequest([0]string{}, elemIsEscaped, w, r)
+						default:
+							s.notAllowed(w, r, "POST")
+						}
+
+						return
+					}
+
 				}
 
 			}
@@ -134,7 +307,7 @@ type Route struct {
 	operationID string
 	pathPattern string
 	count       int
-	args        [0]string
+	args        [1]string
 }
 
 // Name returns ogen operation name.
@@ -262,28 +435,222 @@ func (s *Server) FindPath(method string, u *url.URL) (r Route, _ bool) {
 					}
 				}
 
-			case 'r': // Prefix: "register"
+			case 'p': // Prefix: "p"
 
-				if l := len("register"); len(elem) >= l && elem[0:l] == "register" {
+				if l := len("p"); len(elem) >= l && elem[0:l] == "p" {
 					elem = elem[l:]
 				} else {
 					break
 				}
 
 				if len(elem) == 0 {
-					// Leaf node.
-					switch method {
-					case "POST":
-						r.name = RegisterPostOperation
-						r.summary = "Регистрация пользователя"
-						r.operationID = ""
-						r.pathPattern = "/register"
-						r.args = args
-						r.count = 0
-						return r, true
-					default:
-						return
+					break
+				}
+				switch elem[0] {
+				case 'r': // Prefix: "roducts"
+
+					if l := len("roducts"); len(elem) >= l && elem[0:l] == "roducts" {
+						elem = elem[l:]
+					} else {
+						break
 					}
+
+					if len(elem) == 0 {
+						// Leaf node.
+						switch method {
+						case "POST":
+							r.name = ProductsPostOperation
+							r.summary = "Добавление товара в текущую приемку (только для сотрудников ПВЗ)"
+							r.operationID = ""
+							r.pathPattern = "/products"
+							r.args = args
+							r.count = 0
+							return r, true
+						default:
+							return
+						}
+					}
+
+				case 'v': // Prefix: "vz"
+
+					if l := len("vz"); len(elem) >= l && elem[0:l] == "vz" {
+						elem = elem[l:]
+					} else {
+						break
+					}
+
+					if len(elem) == 0 {
+						switch method {
+						case "GET":
+							r.name = PvzGetOperation
+							r.summary = "Получение списка ПВЗ с фильтрацией по дате приемки и пагинацией"
+							r.operationID = ""
+							r.pathPattern = "/pvz"
+							r.args = args
+							r.count = 0
+							return r, true
+						case "POST":
+							r.name = PvzPostOperation
+							r.summary = "Создание ПВЗ (только для модераторов)"
+							r.operationID = ""
+							r.pathPattern = "/pvz"
+							r.args = args
+							r.count = 0
+							return r, true
+						default:
+							return
+						}
+					}
+					switch elem[0] {
+					case '/': // Prefix: "/"
+
+						if l := len("/"); len(elem) >= l && elem[0:l] == "/" {
+							elem = elem[l:]
+						} else {
+							break
+						}
+
+						// Param: "pvzId"
+						// Match until "/"
+						idx := strings.IndexByte(elem, '/')
+						if idx < 0 {
+							idx = len(elem)
+						}
+						args[0] = elem[:idx]
+						elem = elem[idx:]
+
+						if len(elem) == 0 {
+							break
+						}
+						switch elem[0] {
+						case '/': // Prefix: "/"
+
+							if l := len("/"); len(elem) >= l && elem[0:l] == "/" {
+								elem = elem[l:]
+							} else {
+								break
+							}
+
+							if len(elem) == 0 {
+								break
+							}
+							switch elem[0] {
+							case 'c': // Prefix: "close_last_reception"
+
+								if l := len("close_last_reception"); len(elem) >= l && elem[0:l] == "close_last_reception" {
+									elem = elem[l:]
+								} else {
+									break
+								}
+
+								if len(elem) == 0 {
+									// Leaf node.
+									switch method {
+									case "POST":
+										r.name = PvzPvzIdCloseLastReceptionPostOperation
+										r.summary = "Закрытие последней открытой приемки товаров в рамках ПВЗ"
+										r.operationID = ""
+										r.pathPattern = "/pvz/{pvzId}/close_last_reception"
+										r.args = args
+										r.count = 1
+										return r, true
+									default:
+										return
+									}
+								}
+
+							case 'd': // Prefix: "delete_last_product"
+
+								if l := len("delete_last_product"); len(elem) >= l && elem[0:l] == "delete_last_product" {
+									elem = elem[l:]
+								} else {
+									break
+								}
+
+								if len(elem) == 0 {
+									// Leaf node.
+									switch method {
+									case "POST":
+										r.name = PvzPvzIdDeleteLastProductPostOperation
+										r.summary = "Удаление последнего добавленного товара из текущей приемки (LIFO, только для сотрудников ПВЗ)"
+										r.operationID = ""
+										r.pathPattern = "/pvz/{pvzId}/delete_last_product"
+										r.args = args
+										r.count = 1
+										return r, true
+									default:
+										return
+									}
+								}
+
+							}
+
+						}
+
+					}
+
+				}
+
+			case 'r': // Prefix: "re"
+
+				if l := len("re"); len(elem) >= l && elem[0:l] == "re" {
+					elem = elem[l:]
+				} else {
+					break
+				}
+
+				if len(elem) == 0 {
+					break
+				}
+				switch elem[0] {
+				case 'c': // Prefix: "ceptions"
+
+					if l := len("ceptions"); len(elem) >= l && elem[0:l] == "ceptions" {
+						elem = elem[l:]
+					} else {
+						break
+					}
+
+					if len(elem) == 0 {
+						// Leaf node.
+						switch method {
+						case "POST":
+							r.name = ReceptionsPostOperation
+							r.summary = "Создание новой приемки товаров (только для сотрудников ПВЗ)"
+							r.operationID = ""
+							r.pathPattern = "/receptions"
+							r.args = args
+							r.count = 0
+							return r, true
+						default:
+							return
+						}
+					}
+
+				case 'g': // Prefix: "gister"
+
+					if l := len("gister"); len(elem) >= l && elem[0:l] == "gister" {
+						elem = elem[l:]
+					} else {
+						break
+					}
+
+					if len(elem) == 0 {
+						// Leaf node.
+						switch method {
+						case "POST":
+							r.name = RegisterPostOperation
+							r.summary = "Регистрация пользователя"
+							r.operationID = ""
+							r.pathPattern = "/register"
+							r.args = args
+							r.count = 0
+							return r, true
+						default:
+							return
+						}
+					}
+
 				}
 
 			}

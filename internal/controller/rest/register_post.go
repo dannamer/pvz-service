@@ -17,10 +17,9 @@ func (h *handler) RegisterPost(ctx context.Context, req *api.RegisterPostReq) (a
 		if err == domain.ErrEmailAlreadyExists {
 			return &api.Error{Message: domain.ErrEmailAlreadyExists.Error()}, nil
 		}
-		h.log.With(ctx).Error(ctx, "ошибка регистрации", err)
-		return &api.Error{Message: domain.ErrInternalServerError.Error()}, nil
+		h.log.With(ctx).Error(ctx, "RegisterPost", err)
+		return nil, domain.ErrInternalServerError
 	}
-	h.log.With(ctx).Info(ctx, "регистрация прошла успешна")
 	return &api.User{
 		ID:    api.NewOptUUID(user.ID),
 		Email: user.Email,

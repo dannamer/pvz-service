@@ -6,7 +6,13 @@ package api
 type OperationName = string
 
 const (
-	DummyLoginPostOperation OperationName = "DummyLoginPost"
-	LoginPostOperation      OperationName = "LoginPost"
-	RegisterPostOperation   OperationName = "RegisterPost"
+	DummyLoginPostOperation                 OperationName = "DummyLoginPost"
+	LoginPostOperation                      OperationName = "LoginPost"
+	ProductsPostOperation                   OperationName = "ProductsPost"
+	PvzGetOperation                         OperationName = "PvzGet"
+	PvzPostOperation                        OperationName = "PvzPost"
+	PvzPvzIdCloseLastReceptionPostOperation OperationName = "PvzPvzIdCloseLastReceptionPost"
+	PvzPvzIdDeleteLastProductPostOperation  OperationName = "PvzPvzIdDeleteLastProductPost"
+	ReceptionsPostOperation                 OperationName = "ReceptionsPost"
+	RegisterPostOperation                   OperationName = "RegisterPost"
 )

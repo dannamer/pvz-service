@@ -7,7 +7,7 @@ import (
 	"github.com/dannamer/pvz-service/internal/domain"
 )
 
-func (r *repository) GetByEmail(ctx context.Context, email string) (domain.User, error) {
+func (r *repository) GetUserByEmail(ctx context.Context, email string) (domain.User, error) {
 	query, args, err := squirrel.
 		Select("id", "email", "password", "role").
 		From("users").

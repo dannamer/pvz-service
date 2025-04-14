@@ -10,12 +10,9 @@ import (
 func (h *handler) DummyLoginPost(ctx context.Context, req *api.DummyLoginPostReq) (api.DummyLoginPostRes, error) {
 	token, err := h.use.RegisterDummyUserWithToken(ctx, string(req.Role))
 	if err != nil {
-		h.log.With(ctx).Error(ctx, "не удалось сгенерировать токен", err)
-		return &api.Error{
-			Message: domain.ErrInternalServerError.Error(),
-		}, nil
+		h.log.With(ctx).Error(ctx, "DummyLoginPost", err)
+		return nil, domain.ErrInternalServerError
 	}
-	h.log.With(ctx).Info(ctx, "токен успешно сгенерирован")
 	tok := api.Token(token)
 	return &tok, nil
 }

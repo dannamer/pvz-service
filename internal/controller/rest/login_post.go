@@ -21,8 +21,8 @@ func (h *handler) LoginPost(ctx context.Context, req *api.LoginPostReq) (api.Log
 			return &api.Error{Message: domain.ErrInvalidCredentials.Error()}, nil
 		}
 
-		h.log.With(ctx).Error(ctx, "login failed: internal error", err)
-		return &api.Error{Message: domain.ErrInternalServerError.Error()}, nil
+		h.log.With(ctx).Error(ctx, "LoginPost", err)
+		return nil, domain.ErrInternalServerError
 	}
 
 	h.log.With(ctx).Info(ctx, fmt.Sprintf("login successful: email=%s", req.Email))

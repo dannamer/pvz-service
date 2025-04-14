@@ -11,18 +11,19 @@ import (
 func (u *usecase) RegisterDummyUserWithToken(ctx context.Context, role string) (string, error) {
 	userID := uuid.New()
 
-	user := domain.User{
+	if _, err := u.Register(ctx, domain.User{
 		ID:       userID,
 		Email:    fmt.Sprintf("dummy_%s_%s@example.com", role, userID.String()[:8]),
 		Password: "password",
 		Role:     role,
-	}
-
-	if _, err := u.Register(ctx, user); err != nil {
+	}); err != nil {
 		return "", err
 	}
 
-	token, err := u.jwt.GenerateToken(userID)
+	token, err := u.jwt.GenerateToken(domain.Claims{
+		UserID: userID,
+		Role:   role,
+	})
 	if err != nil {
 		return "", err
 	}
